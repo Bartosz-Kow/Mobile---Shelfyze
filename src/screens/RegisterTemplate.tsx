@@ -1,4 +1,5 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function RegisterTemplate() {
   return (
@@ -7,3 +8,10 @@ export default function RegisterTemplate() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+  },
+});

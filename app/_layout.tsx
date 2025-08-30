@@ -6,7 +6,7 @@ import { LanguageProvider } from "@/src/context/LanguageProvider";
 export default function RootLayout() {
   return (
     <LanguageProvider>
-      <StatusBar style="dark" translucent backgroundColor="transparent" />
+      <StatusBar style="dark" translucent />
       <Stack screenOptions={{ headerShown: false }} />
     </LanguageProvider>
   );
