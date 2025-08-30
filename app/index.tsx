@@ -1,15 +1,6 @@
 import { Text, View } from "react-native";
+import IndexTemplate from "@/src/screens/IndexTemplate";
 
 export default function Index() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-    </View>
-  );
+  return <IndexTemplate />;
 }
