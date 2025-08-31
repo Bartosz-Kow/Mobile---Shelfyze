@@ -4,7 +4,8 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function RegisterTemplate() {
   return (
     <View>
-      <Text>Register</Text>
+      <Text>SHELFYZE</Text>
+      <Text>Zarejestruj się</Text>
     </View>
   );
 }
