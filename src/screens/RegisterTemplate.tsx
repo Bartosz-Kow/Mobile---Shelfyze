@@ -1,11 +1,14 @@
 import { View, Text, StyleSheet } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { useTranslation } from "react-i18next";
+import Logo from "../components/Logo";
 
 export default function RegisterTemplate() {
+  const { t } = useTranslation("auth");
+
   return (
-    <View>
-      <Text>SHELFYZE</Text>
-      <Text>Zarejestruj się</Text>
+    <View style={styles.container}>
+      <Logo size={45} />
+      <Text style={styles.title}>{t("register.title")}</Text>
     </View>
   );
 }
@@ -13,6 +16,15 @@ export default function RegisterTemplate() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    width: "70%",
+    margin: "auto",
+  },
+  title: {
+    marginTop: 2,
+    color: "#707585",
+    fontSize: 25,
+    fontFamily: "Poppins-Regular",
   },
 });
