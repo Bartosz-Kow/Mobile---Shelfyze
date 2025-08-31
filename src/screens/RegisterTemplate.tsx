@@ -3,35 +3,38 @@ import { useTranslation } from "react-i18next";
 import Logo from "../components/Logo";
 import AuthInput from "../components/AuthInputs";
 import { useState } from "react";
-
+import LanguageSwitcher from "../components/LanSwitch";
 export default function RegisterTemplate() {
   const { t } = useTranslation("auth");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   return (
-    <View style={styles.container}>
-      <Logo size={45} />
-      <Text style={styles.title}>{t("register.title")}</Text>
-      <AuthInput
-        label="Email"
-        placeholder="example@email.com"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <AuthInput
-        label={t("labels.password")}
-        placeholder="*******"
-        value={password}
-        onChangeText={setPassword}
-      />
-      <AuthInput
-        label={t("labels.password-repeat")}
-        placeholder="*******"
-        value={password}
-        onChangeText={setPassword}
-      />
-    </View>
+    <>
+      <LanguageSwitcher />
+      <View style={styles.container}>
+        <Logo size={45} />
+        <Text style={styles.title}>{t("register.title")}</Text>
+        <AuthInput
+          label="Email"
+          placeholder="example@email.com"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <AuthInput
+          label={t("labels.password")}
+          placeholder="*******"
+          value={password}
+          onChangeText={setPassword}
+        />
+        <AuthInput
+          label={t("labels.password-repeat")}
+          placeholder="*******"
+          value={password}
+          onChangeText={setPassword}
+        />
+      </View>
+    </>
   );
 }
 
