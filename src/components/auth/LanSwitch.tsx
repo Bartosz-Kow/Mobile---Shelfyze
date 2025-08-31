@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Text, Pressable, StyleSheet } from "react-native";
-import i18n from "../i18n";
+import i18n from "../../i18n";
 
 export default function LanguageSwitcher() {
   const [language, setLanguage] = useState<"pl" | "en">("pl");

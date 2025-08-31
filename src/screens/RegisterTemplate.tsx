@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
-import Logo from "../components/Logo";
-import AuthInput from "../components/AuthInputs";
+import Logo from "../components/auth/Logo";
+import AuthInput from "../components/auth/AuthInputs";
 import { useState } from "react";
-import LanguageSwitcher from "../components/LanSwitch";
+import LanguageSwitcher from "../components/auth/LanSwitch";
 export default function RegisterTemplate() {
   const { t } = useTranslation("auth");
   const [email, setEmail] = useState<string>("");
