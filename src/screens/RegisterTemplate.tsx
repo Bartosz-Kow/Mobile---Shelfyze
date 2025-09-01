@@ -5,6 +5,7 @@ import AuthInput from "../components/auth/AuthInputs";
 import { useState } from "react";
 import LanguageSwitcher from "../components/auth/LanSwitch";
 import AuthButton from "../components/auth/button";
+import GoogleBtn from "../components/auth/googleBtn";
 
 export default function RegisterTemplate() {
   const { t } = useTranslation("auth");
@@ -37,6 +38,8 @@ export default function RegisterTemplate() {
         />
 
         <AuthButton text={t("register.title")} />
+        <Text style={styles.footer}>{t("register.footer")}</Text>
+        <GoogleBtn />
       </View>
     </>
   );
@@ -54,6 +57,13 @@ const styles = StyleSheet.create({
     marginTop: 2,
     color: "#707585",
     fontSize: 25,
+    fontFamily: "Poppins-Regular",
+  },
+  footer: {
+    marginTop: 15,
+    alignSelf: "center",
+    textAlign: "center",
+    color: "#454B60",
     fontFamily: "Poppins-Regular",
   },
 });
