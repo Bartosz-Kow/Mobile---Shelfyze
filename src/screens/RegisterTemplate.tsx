@@ -4,6 +4,8 @@ import Logo from "../components/auth/Logo";
 import AuthInput from "../components/auth/AuthInputs";
 import { useState } from "react";
 import LanguageSwitcher from "../components/auth/LanSwitch";
+import AuthButton from "../components/auth/button";
+
 export default function RegisterTemplate() {
   const { t } = useTranslation("auth");
   const [email, setEmail] = useState<string>("");
@@ -33,6 +35,8 @@ export default function RegisterTemplate() {
           value={password}
           onChangeText={setPassword}
         />
+
+        <AuthButton text={t("register.title")} />
       </View>
     </>
   );

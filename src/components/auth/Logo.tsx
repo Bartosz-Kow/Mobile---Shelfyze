@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     color: "#4266C2",
   },
   logoEnd: {
-    color: "#286161",
+    color: "#19CECE",
   },
   logoUnderline: {
     textDecorationLine: "underline",
