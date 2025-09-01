@@ -6,6 +6,7 @@ import { useState } from "react";
 import LanguageSwitcher from "../components/auth/LanSwitch";
 import AuthButton from "../components/auth/button";
 import GoogleBtn from "../components/auth/googleBtn";
+import Footer from "../components/auth/footer";
 
 export default function RegisterTemplate() {
   const { t } = useTranslation("auth");
@@ -38,8 +39,14 @@ export default function RegisterTemplate() {
         />
 
         <AuthButton text={t("register.title")} />
-        <Text style={styles.footer}>{t("register.footer")}</Text>
+        <Text style={styles.subFooter}>{t("register.footer")}</Text>
         <GoogleBtn />
+
+        <Footer
+          text={t("register.action1")}
+          actionText={t("register.pressable")}
+          router="/register"
+        />
       </View>
     </>
   );
@@ -59,7 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "Poppins-Regular",
   },
-  footer: {
+  subFooter: {
     marginTop: 15,
     alignSelf: "center",
     textAlign: "center",

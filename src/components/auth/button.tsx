@@ -14,7 +14,12 @@ export default function AuthButton({ text, onPress }: AuthButtonProps) {
       activeOpacity={0.8}
       style={styles.wrapper}
     >
-      <LinearGradient colors={["#4266C2", "#286161"]} style={styles.gradient}>
+      <LinearGradient
+        colors={["#4266C2", "#286161"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.gradient}
+      >
         <Text style={styles.text}>{text}</Text>
       </LinearGradient>
     </TouchableOpacity>
@@ -28,7 +33,7 @@ const styles = StyleSheet.create({
   gradient: {
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 8,
+    borderRadius: 40,
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
