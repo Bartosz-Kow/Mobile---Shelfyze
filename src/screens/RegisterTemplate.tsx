@@ -19,6 +19,7 @@ export default function RegisterTemplate() {
   const { t } = useTranslation("auth");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   return (
     <>
@@ -46,12 +47,14 @@ export default function RegisterTemplate() {
               placeholder="*******"
               value={password}
               onChangeText={setPassword}
+              secureTextEntry={true}
             />
             <AuthInput
               label={t("labels.password-repeat")}
               placeholder="*******"
-              value={password}
-              onChangeText={setPassword}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry={true}
             />
 
             <AuthButton text={t("register.title")} />
