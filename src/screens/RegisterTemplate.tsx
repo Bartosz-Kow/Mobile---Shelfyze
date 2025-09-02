@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -14,12 +15,39 @@ import LanguageSwitcher from "../components/auth/LanSwitch";
 import AuthButton from "../components/auth/button";
 import GoogleBtn from "../components/auth/googleBtn";
 import Footer from "../components/auth/footer";
+import { register } from "../api/auth";
 
 export default function RegisterTemplate() {
   const { t } = useTranslation("auth");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const onRegister = async () => {
+    if (!email || !password || !confirmPassword) {
+      Alert.alert(t("register.title"), t("register.alerts.missingFields"));
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert(t("register.title"), t("register.alerts.passwordMismatch"));
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await register(email, password);
+      Alert.alert(t("register.title"), t("register.alerts.success"));
+    } catch (err: any) {
+      Alert.alert(
+        t("register.title"),
+        err.message || t("register.alerts.error")
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -47,17 +75,21 @@ export default function RegisterTemplate() {
               placeholder="*******"
               value={password}
               onChangeText={setPassword}
-              secureTextEntry={true}
+              secureTextEntry
             />
             <AuthInput
               label={t("labels.password-repeat")}
               placeholder="*******"
               value={confirmPassword}
               onChangeText={setConfirmPassword}
-              secureTextEntry={true}
+              secureTextEntry
             />
 
-            <AuthButton text={t("register.title")} />
+            <AuthButton
+              text={loading ? "Rejestruję..." : t("register.title")}
+              onPress={onRegister} // <-- kliknięcie obsługujemy tutaj
+            />
+
             <Text style={styles.subFooter}>{t("register.footer")}</Text>
             <GoogleBtn />
 
