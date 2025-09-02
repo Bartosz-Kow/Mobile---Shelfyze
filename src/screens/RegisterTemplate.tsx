@@ -16,6 +16,7 @@ import AuthButton from "../components/auth/button";
 import GoogleBtn from "../components/auth/googleBtn";
 import Footer from "../components/auth/footer";
 import { register } from "../api/auth";
+import { router } from "expo-router";
 
 export default function RegisterTemplate() {
   const { t } = useTranslation("auth");
@@ -39,6 +40,7 @@ export default function RegisterTemplate() {
       setLoading(true);
       const res = await register(email, password);
       Alert.alert(t("register.title"), t("register.alerts.success"));
+      router.push({ pathname: "/verify", params: { userEmail: email } });
     } catch (err: any) {
       Alert.alert(
         t("register.title"),
@@ -87,7 +89,7 @@ export default function RegisterTemplate() {
 
             <AuthButton
               text={loading ? "Rejestruję..." : t("register.title")}
-              onPress={onRegister} // <-- kliknięcie obsługujemy tutaj
+              onPress={onRegister}
             />
 
             <Text style={styles.subFooter}>{t("register.footer")}</Text>
