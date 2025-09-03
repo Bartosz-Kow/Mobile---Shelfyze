@@ -32,7 +32,7 @@ export default function VerifyTemplate() {
       setLoading(true);
       const res = await verify(email, code);
       alert(t("verify.alerts.success"));
-      router.push("/");
+      router.push("/(tabs)");
     } catch (err: any) {
       alert(t("verify.alerts.expired"));
       setLoading(false);
