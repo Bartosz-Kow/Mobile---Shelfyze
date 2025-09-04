@@ -41,7 +41,7 @@ export default function IndexTemplate() {
       <Text style={styles.text}>{t("hero.line1")}</Text>
       <Text style={styles.text}>{t("hero.line2")}</Text>
       <Pressable
-        onPress={() => router.push("/register")}
+        onPress={() => router.replace("/register")}
         style={({ pressed }) => [styles.arrow, pressed && styles.arrowPressed]}
       >
         <FontAwesome5 name="long-arrow-alt-right" size={50} color="white" />
