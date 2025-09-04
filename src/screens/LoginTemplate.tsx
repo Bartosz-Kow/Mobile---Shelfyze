@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -14,11 +15,30 @@ import LanguageSwitcher from "../components/auth/LanSwitch";
 import AuthButton from "../components/auth/button";
 import GoogleBtn from "../components/auth/googleBtn";
 import Footer from "../components/auth/footer";
-
+import { login } from "../api/auth";
+import { router } from "expo-router";
 export default function LoginTemplate() {
   const { t } = useTranslation("auth");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+
+  const onLogin = async () => {
+    if (!email || !password) {
+      Alert.alert(t(""));
+    }
+
+    try {
+      setLoading(true);
+      const res = await login(email, password);
+      Alert.alert(t("login.title"));
+      router.replace("/(tabs)");
+    } catch (err: any) {
+      Alert.alert(t("login.title"), err.message || t("login.alerts.error"));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -49,7 +69,7 @@ export default function LoginTemplate() {
               secureTextEntry={true}
             />
 
-            <AuthButton text={t("login.title")} />
+            <AuthButton text={t("login.title")} onPress={onLogin} />
             <Text style={styles.subFooter}>{t("login.footer")}</Text>
             <GoogleBtn />
 
