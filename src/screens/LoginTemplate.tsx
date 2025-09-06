@@ -17,11 +17,14 @@ import GoogleBtn from "../components/auth/googleBtn";
 import Footer from "../components/auth/footer";
 import { login } from "../api/auth";
 import { router } from "expo-router";
+import { useAuth } from "../context/AuthProvider";
+
 export default function LoginTemplate() {
   const { t } = useTranslation("auth");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const { login: setAuthUser } = useAuth();
 
   const onLogin = async () => {
     if (!email || !password) {
@@ -32,6 +35,7 @@ export default function LoginTemplate() {
       setLoading(true);
       const res = await login(email, password);
       Alert.alert(t("login.title"));
+      setAuthUser(res);
       router.replace("/(tabs)");
     } catch (err: any) {
       Alert.alert(t("login.title"), err.message || t("login.alerts.error"));

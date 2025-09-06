@@ -40,6 +40,7 @@ export default function RegisterTemplate() {
       setLoading(true);
       const res = await register(email, password);
       Alert.alert(t("register.title"), t("register.alerts.success"));
+
       router.replace({ pathname: "/verify", params: { userEmail: email } });
     } catch (err: any) {
       Alert.alert(

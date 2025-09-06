@@ -15,12 +15,14 @@ import AuthButton from "../components/auth/button";
 import Footer from "../components/auth/footer";
 import { useLocalSearchParams, router } from "expo-router";
 import { verify } from "../api/auth";
+import { useAuth } from "../context/AuthProvider";
 
 export default function VerifyTemplate() {
   const { t } = useTranslation("auth");
   const [code, setCode] = useState("");
   const { userEmail } = useLocalSearchParams<{ userEmail: string }>();
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
   const VerifyCode = async () => {
     if (!code) {
@@ -32,6 +34,7 @@ export default function VerifyTemplate() {
       setLoading(true);
       const res = await verify(email, code);
       alert(t("verify.alerts.success"));
+      login(res);
       router.replace("/(tabs)");
     } catch (err: any) {
       alert(t("verify.alerts.expired"));
