@@ -32,20 +32,20 @@ export default function TabLayout() {
       tabBar={(props) => <MinimalTabBar {...props} />}
     >
       <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="home" size={size ?? 22} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="chat"
         options={{
           title: "Chat",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="comments" size={size ?? 22} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="home" size={size ?? 22} color={color} />
           ),
         }}
       />
