@@ -1,10 +1,25 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function FloatingBtn() {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.fab}>
-        <Text style={styles.fabText}>+</Text>
+      <TouchableOpacity activeOpacity={0.85} style={styles.fabWrapper}>
+        <LinearGradient
+          colors={["#4266C2", "#286161"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.fab}
+        >
+          <Ionicons name="add" size={32} color="#fff" />
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   );
@@ -14,25 +29,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  fab: {
+  fabWrapper: {
     position: "absolute",
     bottom: 100,
     right: 20,
-    backgroundColor: "#6200ee",
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    borderRadius: 35,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOpacity: 0.2,
+        shadowOffset: { width: 0, height: 6 },
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 8,
+      },
+    }),
+  },
+  fab: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-  },
-  fabText: {
-    color: "#fff",
-    fontSize: 30,
-    fontWeight: "bold",
   },
 });
