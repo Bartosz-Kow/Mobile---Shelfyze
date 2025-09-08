@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import { setAuthToken } from "../api/http";
 
 export interface User {
   userId: number;
@@ -19,10 +20,22 @@ const AuthContext = createContext<Ctx | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUserState] = useState<User | null>(null);
 
-  const login = (u: User) => setUserState(u);
-  const logout = () => setUserState(null);
+  const login = (u: User) => {
+    setUserState(u);
+    setAuthToken(u.token);
+  };
+
+  const logout = () => {
+    setUserState(null);
+    setAuthToken(null);
+  };
+
   const setUser = (patch: Partial<User>) =>
-    setUserState((prev) => (prev ? { ...prev, ...patch } : prev));
+    setUserState((prev) => {
+      const updated = prev ? { ...prev, ...patch } : prev;
+      if (updated?.token) setAuthToken(updated.token);
+      return updated;
+    });
 
   return (
     <AuthContext.Provider value={{ user, login, logout, setUser }}>
