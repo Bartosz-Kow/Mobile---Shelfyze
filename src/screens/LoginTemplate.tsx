@@ -1,22 +1,22 @@
+import { router } from "expo-router";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
-  View,
-  Text,
-  StyleSheet,
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Alert,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
-import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import Logo from "../components/auth/Logo";
+import { login } from "../api/auth";
 import AuthInput from "../components/auth/AuthInputs";
 import LanguageSwitcher from "../components/auth/LanSwitch";
+import Logo from "../components/auth/Logo";
 import AuthButton from "../components/auth/button";
-import GoogleBtn from "../components/auth/googleBtn";
 import Footer from "../components/auth/footer";
-import { login } from "../api/auth";
-import { router } from "expo-router";
+import GoogleBtn from "../components/auth/googleBtn";
 import { useAuth } from "../context/AuthProvider";
 
 export default function LoginTemplate() {
@@ -37,6 +37,7 @@ export default function LoginTemplate() {
       Alert.alert(t("login.title"));
       setAuthUser(res);
       router.replace("/(tabs)");
+      console.log("🔑 Auth response:", res);
     } catch (err: any) {
       Alert.alert(t("login.title"), err.message || t("login.alerts.error"));
     } finally {
