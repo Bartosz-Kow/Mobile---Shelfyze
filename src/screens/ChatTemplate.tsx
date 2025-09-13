@@ -22,7 +22,7 @@ import {
 import { useAuth } from "../context/AuthProvider";
 
 const ADMIN_ID = 1;
-const POLLING_INTERVAL = 15 * 60 * 1000; // 15 minut
+const POLLING_INTERVAL = 15 * 60 * 1000;
 
 type ChatMessage = {
   id: string;
@@ -40,7 +40,6 @@ export default function ChatScreen() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
 
-  // 🔹 mapowanie backend -> lokalne wiadomości
   const mapRowsToChat = (rows: MessageRow[]): ChatMessage[] =>
     rows.map((m) => ({
       id: String(m.id),
@@ -68,7 +67,6 @@ export default function ChatScreen() {
     return () => clearInterval(interval);
   }, [load]);
 
-  // 🔹 wysyłanie wiadomości
   const handleSend = async () => {
     if (!input.trim()) return;
     const optimistic: ChatMessage = {
@@ -93,7 +91,6 @@ export default function ChatScreen() {
     }
   };
 
-  // 🔹 renderowanie pojedynczej wiadomości
   const renderMessage = ({ item }: { item: ChatMessage }) => {
     const isMe = item.author === "me";
     return (
@@ -111,12 +108,11 @@ export default function ChatScreen() {
     );
   };
 
-  // 🔹 Android back button → powrót do tabs
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
         router.replace("/(tabs)");
-        return true; // blokuje domyślne cofnięcie
+        return true;
       };
       const subscription = BackHandler.addEventListener(
         "hardwareBackPress",
@@ -128,7 +124,6 @@ export default function ChatScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "top"]}>
-      {/* 🔹 Nagłówek z przyciskiem cofania */}
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => router.replace("/(tabs)")}
@@ -144,7 +139,6 @@ export default function ChatScreen() {
         behavior={Platform.select({ ios: "padding", android: undefined })}
         keyboardVerticalOffset={Platform.select({ ios: 64, android: 0 })}
       >
-        {/* Lista wiadomości */}
         <FlatList
           data={messages.sort((a, b) => b.createdAt - a.createdAt)}
           keyExtractor={(item) => item.id}
@@ -153,7 +147,6 @@ export default function ChatScreen() {
           contentContainerStyle={{ padding: 12 }}
         />
 
-        {/* Pole do wpisywania */}
         <View style={styles.inputRow}>
           <TextInput
             style={styles.input}

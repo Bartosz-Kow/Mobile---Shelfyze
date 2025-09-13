@@ -1,4 +1,3 @@
-// app/(tabs)/_layout.tsx
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import * as Haptics from "expo-haptics";
@@ -35,7 +34,6 @@ export default function TabLayout() {
         name="chat"
         options={{
           title: "Chat",
-          // 👇 ta opcja ukryje tabBar (obsłużymy w MinimalTabBar)
           tabBarStyle: { display: "none" },
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="comments" size={size ?? 22} color={color} />
@@ -65,11 +63,15 @@ export default function TabLayout() {
 }
 
 function MinimalTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  // 🔥 Sprawdź opcje aktualnego ekranu
   const focusedOptions = descriptors[state.routes[state.index].key].options;
 
-  // Jeśli `tabBarStyle.display === 'none'`, nie renderuj tabów
-  if (focusedOptions.tabBarStyle?.display === "none") {
+  const tabBarStyle = focusedOptions.tabBarStyle;
+  if (
+    tabBarStyle &&
+    typeof tabBarStyle === "object" &&
+    "display" in tabBarStyle &&
+    (tabBarStyle as { display?: string }).display === "none"
+  ) {
     return null;
   }
 
