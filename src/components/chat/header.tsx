@@ -1,8 +1,9 @@
 import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-interface HeaderProps {
+
+type HeaderProps = {
   onBack: () => void;
-}
+};
 
 export default function ChatHeader({ onBack }: HeaderProps) {
   const router = useRouter();

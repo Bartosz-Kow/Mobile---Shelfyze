@@ -100,7 +100,9 @@ export default function ChatScreen() {
           isMe ? styles.myMessage : styles.adminMessage,
         ]}
       >
-        <Text style={styles.messageText}>{item.text}</Text>
+        <Text style={[styles.messageText, isMe && { color: "#fff" }]}>
+          {item.text}
+        </Text>
         {item.status === "error" && (
           <Text style={styles.errorLabel}>Nie wysłano</Text>
         )}
@@ -123,27 +125,28 @@ export default function ChatScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container} edges={["bottom", "top"]}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.replace("/(tabs)")}
-          style={styles.backButton}
-        >
-          <Text style={styles.backText}>←</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Czat</Text>
-      </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+    >
+      <SafeAreaView style={styles.container} edges={["bottom", "top"]}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => router.replace("/(tabs)")}
+            style={styles.backButton}
+          >
+            <Text style={styles.backText}>←</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Czat</Text>
+        </View>
 
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.select({ ios: "padding", android: undefined })}
-        keyboardVerticalOffset={Platform.select({ ios: 64, android: 0 })}
-      >
         <FlatList
           data={messages.sort((a, b) => b.createdAt - a.createdAt)}
           keyExtractor={(item) => item.id}
           renderItem={renderMessage}
           inverted
+          keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ padding: 12 }}
         />
 
@@ -162,8 +165,8 @@ export default function ChatScreen() {
             <Text style={{ color: "#fff", fontWeight: "600" }}>Wyślij</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
