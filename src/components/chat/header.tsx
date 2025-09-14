@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type HeaderProps = {
@@ -6,14 +5,9 @@ type HeaderProps = {
 };
 
 export default function ChatHeader({ onBack }: HeaderProps) {
-  const router = useRouter();
-
   return (
     <View style={styles.header}>
-      <TouchableOpacity
-        onPress={() => router.replace("/(tabs)")}
-        style={styles.backButton}
-      >
+      <TouchableOpacity onPress={onBack} style={styles.backButton}>
         <Text style={styles.backText}>←</Text>
       </TouchableOpacity>
       <Text style={styles.headerTitle}>Czat</Text>

@@ -7,10 +7,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -19,18 +15,13 @@ import {
   sendMessageToAdmin,
   type MessageRow,
 } from "../api/chat";
+import ChatInput from "../components/chat/chatinput";
+import ChatHeader from "../components/chat/header";
+import MessageBubble from "../components/chat/MessagesBubble";
 import { useAuth } from "../context/AuthProvider";
-
+import { ChatMessage } from "../types/chat";
 const ADMIN_ID = 1;
 const POLLING_INTERVAL = 15 * 60 * 1000;
-
-type ChatMessage = {
-  id: string;
-  text: string;
-  author: "me" | "admin";
-  createdAt: number;
-  status?: "sending" | "error";
-};
 
 export default function ChatScreen() {
   const { user } = useAuth();
@@ -91,25 +82,6 @@ export default function ChatScreen() {
     }
   };
 
-  const renderMessage = ({ item }: { item: ChatMessage }) => {
-    const isMe = item.author === "me";
-    return (
-      <View
-        style={[
-          styles.messageContainer,
-          isMe ? styles.myMessage : styles.adminMessage,
-        ]}
-      >
-        <Text style={[styles.messageText, isMe && { color: "#fff" }]}>
-          {item.text}
-        </Text>
-        {item.status === "error" && (
-          <Text style={styles.errorLabel}>Nie wysłano</Text>
-        )}
-      </View>
-    );
-  };
-
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
@@ -131,40 +103,17 @@ export default function ChatScreen() {
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <SafeAreaView style={styles.container} edges={["bottom", "top"]}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => router.replace("/(tabs)")}
-            style={styles.backButton}
-          >
-            <Text style={styles.backText}>←</Text>
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Czat</Text>
-        </View>
+        <ChatHeader onBack={() => router.replace("/(tabs)")} />
 
         <FlatList
           data={messages.sort((a, b) => b.createdAt - a.createdAt)}
           keyExtractor={(item) => item.id}
-          renderItem={renderMessage}
+          renderItem={({ item }) => <MessageBubble message={item} />}
           inverted
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ padding: 12 }}
         />
-
-        <View style={styles.inputRow}>
-          <TextInput
-            style={styles.input}
-            placeholder="Napisz wiadomość..."
-            value={input}
-            onChangeText={setInput}
-          />
-          <TouchableOpacity
-            onPress={handleSend}
-            style={styles.sendButton}
-            activeOpacity={0.7}
-          >
-            <Text style={{ color: "#fff", fontWeight: "600" }}>Wyślij</Text>
-          </TouchableOpacity>
-        </View>
+        <ChatInput value={input} onChange={setInput} onSend={handleSend} />
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -172,63 +121,4 @@ export default function ChatScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f9fafb" },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 12,
-    borderBottomWidth: 1,
-    borderColor: "#ddd",
-    backgroundColor: "#fff",
-  },
-  backButton: {
-    marginRight: 12,
-    padding: 4,
-  },
-  backText: {
-    fontSize: 22,
-    color: "#4266C2",
-    fontWeight: "bold",
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#111",
-  },
-  messageContainer: {
-    maxWidth: "80%",
-    marginVertical: 4,
-    padding: 10,
-    borderRadius: 12,
-  },
-  myMessage: {
-    alignSelf: "flex-end",
-    backgroundColor: "#4266C2",
-  },
-  adminMessage: {
-    alignSelf: "flex-start",
-    backgroundColor: "#e5e7eb",
-  },
-  messageText: { color: "#111", fontSize: 15 },
-  errorLabel: { color: "red", fontSize: 12, marginTop: 2 },
-  inputRow: {
-    flexDirection: "row",
-    padding: 8,
-    borderTopWidth: 1,
-    borderColor: "#ddd",
-    backgroundColor: "#fff",
-    alignItems: "center",
-  },
-  input: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: "#f1f5f9",
-    borderRadius: 20,
-    marginRight: 8,
-  },
-  sendButton: {
-    backgroundColor: "#4266C2",
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-  },
 });
