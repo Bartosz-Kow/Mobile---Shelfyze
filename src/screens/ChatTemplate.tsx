@@ -20,6 +20,7 @@ import ChatHeader from "../components/chat/header";
 import MessageBubble from "../components/chat/MessagesBubble";
 import { useAuth } from "../context/AuthProvider";
 import { ChatMessage } from "../types/chat";
+
 const ADMIN_ID = 1;
 const POLLING_INTERVAL = 15 * 60 * 1000;
 

@@ -3,36 +3,65 @@ import { StyleSheet, Text, View } from "react-native";
 
 export default function MessageBubble({ message }: { message: ChatMessage }) {
   const isMe = message.author === "me";
+  const label = isMe ? "Ja" : "Admin";
+
   return (
     <View
-      style={[
-        styles.messageContainer,
-        isMe ? styles.myMessage : styles.adminMessage,
-      ]}
+      style={[styles.wrapper, isMe ? styles.myWrapper : styles.adminWrapper]}
     >
-      <Text style={[styles.messageText, isMe && { color: "#fff" }]}>
-        {message.text}
+      <Text style={[styles.label, isMe ? styles.myLabel : styles.adminLabel]}>
+        {label}
       </Text>
-      {message.status === "error" && (
-        <Text style={styles.errorLabel}>Nie wysłano</Text>
-      )}
+
+      <View
+        style={[
+          styles.messageContainer,
+          isMe ? styles.myMessage : styles.adminMessage,
+        ]}
+      >
+        <Text style={[styles.messageText, isMe && { color: "#fff" }]}>
+          {message.text}
+        </Text>
+        {message.status === "error" && (
+          <Text style={styles.errorLabel}>Nie wysłano</Text>
+        )}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  messageContainer: {
-    maxWidth: "80%",
+  wrapper: {
     marginVertical: 4,
+    maxWidth: "80%",
+  },
+  myWrapper: {
+    alignSelf: "flex-end",
+    alignItems: "flex-end",
+  },
+  adminWrapper: {
+    alignSelf: "flex-start",
+    alignItems: "flex-start",
+  },
+  label: {
+    fontSize: 12,
+    marginBottom: 2,
+    fontWeight: "600",
+  },
+  myLabel: {
+    color: "#4266C2",
+  },
+  adminLabel: {
+    color: "#6B7280",
+  },
+  messageContainer: {
     padding: 10,
     borderRadius: 12,
   },
   myMessage: {
-    alignSelf: "flex-end",
     backgroundColor: "#4266C2",
   },
   adminMessage: {
-    alignSelf: "flex-start",
     backgroundColor: "#e5e7eb",
   },
   messageText: { color: "#111", fontSize: 15 },

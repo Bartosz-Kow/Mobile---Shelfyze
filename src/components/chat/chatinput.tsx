@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import {
   StyleSheet,
@@ -15,43 +16,80 @@ type ChatInputProps = {
 
 export default function ChatInput({ value, onChange, onSend }: ChatInputProps) {
   return (
-    <View style={styles.inputRow}>
-      <TextInput
-        style={styles.input}
-        placeholder="Napisz wiadomość..."
-        value={value}
-        onChangeText={onChange}
-      />
+    <View style={styles.container}>
+      <View style={styles.inputWrapper}>
+        <TextInput
+          style={styles.input}
+          placeholder="Napisz wiadomość..."
+          placeholderTextColor="#9CA3AF"
+          value={value}
+          onChangeText={onChange}
+          multiline
+        />
+      </View>
+
       <TouchableOpacity
         onPress={onSend}
-        style={styles.sendButton}
-        activeOpacity={0.7}
+        activeOpacity={0.8}
+        style={styles.sendWrapper}
       >
-        <Text style={{ color: "#fff", fontWeight: "600" }}>Wyślij</Text>
+        <LinearGradient
+          colors={["#4266C2", "#286161"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.sendButton}
+        >
+          <Text style={styles.sendIcon}>✈️</Text>
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
-  inputRow: {
+  container: {
     flexDirection: "row",
-    padding: 8,
+    padding: 12,
     borderTopWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "#E5E7EB",
     backgroundColor: "#fff",
-    alignItems: "center",
+    alignItems: "flex-end",
+  },
+  inputWrapper: {
+    flex: 1,
+    marginRight: 10,
+    backgroundColor: "#fff",
+    borderRadius: 30,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 3,
   },
   input: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: "#f1f5f9",
-    borderRadius: 20,
-    marginRight: 8,
+    fontSize: 15,
+    color: "#111827",
+    fontFamily: "Poppins-Regular",
+    maxHeight: 120,
+  },
+  sendWrapper: {
+    borderRadius: 30,
+    overflow: "hidden",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
   },
   sendButton: {
-    backgroundColor: "#4266C2",
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  sendIcon: {
+    fontSize: 20,
+    color: "#fff",
   },
 });
