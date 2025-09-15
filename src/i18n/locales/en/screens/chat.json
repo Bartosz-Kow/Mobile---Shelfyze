@@ -1,0 +1,9 @@
+{
+  "chat": {
+    "title": "Chat",
+    "me": "Me",
+    "admin": "Admin",
+    "notSent": "Not sent",
+    "placeholder": "Write a message..."
+  }
+}

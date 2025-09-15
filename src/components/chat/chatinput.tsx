@@ -1,5 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   StyleSheet,
   Text,
@@ -15,12 +16,13 @@ type ChatInputProps = {
 };
 
 export default function ChatInput({ value, onChange, onSend }: ChatInputProps) {
+  const { t } = useTranslation("chat");
   return (
     <View style={styles.container}>
       <View style={styles.inputWrapper}>
         <TextInput
           style={styles.input}
-          placeholder="Napisz wiadomość..."
+          placeholder={t("chat.placeholder")}
           placeholderTextColor="#9CA3AF"
           value={value}
           onChangeText={onChange}
