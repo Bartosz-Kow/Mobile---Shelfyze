@@ -1,9 +1,11 @@
 import { ChatMessage } from "@/src/types/chat";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function MessageBubble({ message }: { message: ChatMessage }) {
+  const { t } = useTranslation("chat");
   const isMe = message.author === "me";
-  const label = isMe ? "Ja" : "Admin";
+  const label = isMe ? t("chat.me") : t("chat.admin");
 
   return (
     <View
@@ -23,7 +25,7 @@ export default function MessageBubble({ message }: { message: ChatMessage }) {
           {message.text}
         </Text>
         {message.status === "error" && (
-          <Text style={styles.errorLabel}>Nie wysłano</Text>
+          <Text style={styles.errorLabel}>{t("notSent")}</Text>
         )}
       </View>
     </View>

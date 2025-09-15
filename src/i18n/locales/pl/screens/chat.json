@@ -1,0 +1,9 @@
+{
+  "chat": {
+    "title": "Czat",
+    "me": "Ja",
+    "admin": "Admin",
+    "notSent": "Nie wysłano",
+    "placeholder": "Napisz wiadomość..."
+  }
+}
