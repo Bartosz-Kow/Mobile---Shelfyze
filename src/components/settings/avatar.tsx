@@ -1,10 +1,60 @@
-import React from "react";
-import { Text, View } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import * as ImagePicker from "expo-image-picker";
+import { useState } from "react";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function AvatarComponent() {
+  const [image, setImage] = useState<string | null>(null);
+
+  const pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      alert("Potrzebujesz pozwolenia na dostęp do galerii 📷");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   return (
-    <View>
-      <Text>A</Text>
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.avatarWrapper} onPress={pickImage}>
+        {image ? (
+          <Image source={{ uri: image }} style={styles.avatar} />
+        ) : (
+          <Ionicons name="person" size={50} color="white" />
+        )}
+      </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatarWrapper: {
+    backgroundColor: "#4266C2",
+    borderRadius: 60,
+    width: 120,
+    height: 120,
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+  },
+  avatar: {
+    width: "100%",
+    height: "100%",
+  },
+});
