@@ -1,16 +1,18 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { setAuthToken } from "../api/http";
+import { loadUserImage } from "../utills/saveImage";
 
 export interface User {
   userId: number;
   token: string;
   email: string;
   username: string;
+  avatar?: string | null;
 }
 
 type Ctx = {
   user: User | null;
-  login: (u: User) => void;
+  login: (u: User) => Promise<void>;
   logout: () => void;
   setUser: (patch: Partial<User>) => void;
 };
@@ -20,8 +22,9 @@ const AuthContext = createContext<Ctx | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUserState] = useState<User | null>(null);
 
-  const login = (u: User) => {
-    setUserState(u);
+  const login = async (u: User) => {
+    const avatar = await loadUserImage(u.userId);
+    setUserState({ ...u, avatar });
     setAuthToken(u.token);
   };
 
