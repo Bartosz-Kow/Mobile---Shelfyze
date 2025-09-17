@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
-import { useAuth } from "../context/AuthProvider";
+import { StyleSheet, Text, View } from "react-native";
 import FloatingBtn from "../components/home/FloatingButton";
+import { useAuth } from "../context/AuthProvider";
+
 export default function HomeScreen() {
   const { user } = useAuth();
 
