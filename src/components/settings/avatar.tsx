@@ -1,23 +1,33 @@
+import { useAuth } from "@/src/context/AuthProvider";
+import { saveUserImage } from "@/src/utills/saveImage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function AvatarComponent() {
+  const { user, setUser } = useAuth();
   const [image, setImage] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (user?.avatar) {
+      setImage(user.avatar);
+    }
+  }, [user]);
+
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images", "videos"],
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
 
-    console.log(result);
+    if (!result.canceled && user) {
+      const savedPath = await saveUserImage(user.userId, result.assets[0].uri);
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImage(savedPath);
+      setUser({ avatar: savedPath });
     }
   };
 
@@ -36,7 +46,6 @@ export default function AvatarComponent() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
