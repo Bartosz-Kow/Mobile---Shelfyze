@@ -7,18 +7,14 @@ export default function AvatarComponent() {
   const [image, setImage] = useState<string | null>(null);
 
   const pickImage = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      alert("Potrzebujesz pozwolenia na dostęp do galerii 📷");
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images", "videos"],
       allowsEditing: true,
-      aspect: [1, 1],
+      aspect: [4, 3],
       quality: 1,
     });
+
+    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
