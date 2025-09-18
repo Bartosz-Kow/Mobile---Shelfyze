@@ -7,8 +7,12 @@ import { useSettingsActions } from "../hooks/useSettingsActions";
 
 export default function SettingsScreen() {
   const { user } = useAuth();
-  const { confirmLogout, confirmDeleteAccount, confirmChangeLanguage } =
-    useSettingsActions();
+  const {
+    confirmLogout,
+    confirmDeleteAccount,
+    confirmChangeLanguage,
+    changeUsername,
+  } = useSettingsActions();
   const { t } = useTranslation("settings");
 
   return (
@@ -24,7 +28,7 @@ export default function SettingsScreen() {
         <ActionElement
           icon="person"
           text={t("settings.changeName")}
-          onPress={() => console.log("Change Name pressed")}
+          onPress={changeUsername}
         />
         <ActionElement
           icon="globe"
