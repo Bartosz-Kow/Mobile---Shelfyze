@@ -79,32 +79,19 @@ export function useSettingsActions() {
     );
   };
 
-  const changeUsername = () => {
-    Alert.prompt(
-      t("settings.changeName"),
-      t("settings.alerts.enterNewName", "Please enter your new username"),
-      [
-        { text: t("settings.alerts.cancel"), style: "cancel" },
-        {
-          text: t("settings.alerts.confirmChange"),
-          onPress: async (newName) => {
-            if (!newName) return;
-            try {
-              const res = await updateUsername(newName);
-              if (res.success) {
-                setUser({ username: res.username! });
-              } else {
-                Alert.alert("Error", res.error || "Could not update username");
-              }
-            } catch (e) {
-              console.error("❌ Error updating username:", e);
-              Alert.alert("Error", "Could not update username");
-            }
-          },
-        },
-      ],
-      "plain-text"
-    );
+  const changeUsername = async (newName: string) => {
+    if (!newName) return;
+    try {
+      const res = await updateUsername(newName);
+      if (res.success) {
+        setUser({ username: res.username! });
+      } else {
+        Alert.alert("Error", res.error || "Could not update username");
+      }
+    } catch (e) {
+      console.error("❌ Error updating username:", e);
+      Alert.alert("Error", "Could not update username");
+    }
   };
 
   return {

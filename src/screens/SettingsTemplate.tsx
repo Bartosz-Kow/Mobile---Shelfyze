@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 import ActionElement from "../components/settings/actionEl";
 import AvatarComponent from "../components/settings/avatar";
+import NameModal from "../components/settings/nameModal";
 import { useAuth } from "../context/AuthProvider";
 import { useSettingsActions } from "../hooks/useSettingsActions";
 
@@ -14,6 +16,7 @@ export default function SettingsScreen() {
     changeUsername,
   } = useSettingsActions();
   const { t } = useTranslation("settings");
+  const [showNameModal, setShowNameModal] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -28,7 +31,7 @@ export default function SettingsScreen() {
         <ActionElement
           icon="person"
           text={t("settings.changeName")}
-          onPress={changeUsername}
+          onPress={() => setShowNameModal(true)}
         />
         <ActionElement
           icon="globe"
@@ -50,6 +53,15 @@ export default function SettingsScreen() {
           onPress={confirmDeleteAccount}
         />
       </View>
+
+      <NameModal
+        visible={showNameModal}
+        onClose={() => setShowNameModal(false)}
+        onSubmit={async (newName) => {
+          await changeUsername(newName);
+          setShowNameModal(false);
+        }}
+      />
     </View>
   );
 }

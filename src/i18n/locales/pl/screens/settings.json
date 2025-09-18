@@ -16,7 +16,8 @@
       "confirmDelete": "Usuń",
       "changeLanguageTitle": "Zmień język",
       "changeLanguageMessage": "Czy chcesz zmienić język aplikacji?",
-      "confirmChange": "Zmień"
+      "confirmChange": "Zmień",
+      "enterNewName": "Wpisz nową nazwę użytkownika"
     }
   }
 }
