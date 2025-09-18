@@ -1,0 +1,19 @@
+{
+  "settings": {
+    "account": "Account",
+    "dangerZone": "Danger Zone",
+    "changeName": "Change Name",
+    "changeLanguage": "Change Language",
+    "logout": "Logout",
+    "deleteAccount": "Delete Account",
+    "alerts": {
+      "logoutTitle": "Confirm Logout",
+      "logoutMessage": "Are you sure you want to log out?",
+      "deleteTitle": "Delete Account",
+      "deleteMessage": "This action cannot be undone!",
+      "cancel": "Cancel",
+      "confirmLogout": "Logout",
+      "confirmDelete": "Delete"
+    }
+  }
+}

@@ -1,10 +1,14 @@
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 import ActionElement from "../components/settings/actionEl";
 import AvatarComponent from "../components/settings/avatar";
 import { useAuth } from "../context/AuthProvider";
+import { useSettingsActions } from "../hooks/useSettingsActions";
 
 export default function SettingsScreen() {
   const { user } = useAuth();
+  const { confirmLogout, confirmDeleteAccount } = useSettingsActions();
+  const { t } = useTranslation("settings");
 
   return (
     <View style={styles.container}>
@@ -14,31 +18,31 @@ export default function SettingsScreen() {
         <Text style={styles.email}>{user?.email ?? "example@mail.com"}</Text>
       </View>
 
-      <Text style={styles.sectionHeader}>Account</Text>
+      <Text style={styles.sectionHeader}>{t("settings.account")}</Text>
       <View style={styles.card}>
         <ActionElement
           icon="person"
-          text="Change Name"
+          text={t("settings.changeName")}
           onPress={() => console.log("Change Name pressed")}
         />
         <ActionElement
           icon="globe"
-          text="Change Language"
+          text={t("settings.changeLanguage")}
           onPress={() => console.log("Change Language pressed")}
         />
       </View>
 
-      <Text style={styles.sectionHeader}>Danger Zone</Text>
+      <Text style={styles.sectionHeader}>{t("settings.dangerZone")}</Text>
       <View style={styles.card}>
         <ActionElement
           icon="log-out"
-          text="Logout"
-          onPress={() => console.log("Logout pressed")}
+          text={t("settings.logout")}
+          onPress={confirmLogout}
         />
         <ActionElement
           icon="trash"
-          text="Delete Account"
-          onPress={() => console.log("Delete Account pressed")}
+          text={t("settings.deleteAccount")}
+          onPress={confirmDeleteAccount}
         />
       </View>
     </View>

@@ -1,0 +1,19 @@
+{
+  "settings": {
+    "account": "Konto",
+    "dangerZone": "Strefa zagrożenia",
+    "changeName": "Zmień nazwę",
+    "changeLanguage": "Zmień język",
+    "logout": "Wyloguj",
+    "deleteAccount": "Usuń konto",
+    "alerts": {
+      "logoutTitle": "Potwierdź wylogowanie",
+      "logoutMessage": "Czy na pewno chcesz się wylogować?",
+      "deleteTitle": "Usuń konto",
+      "deleteMessage": "Tej operacji nie można cofnąć!",
+      "cancel": "Anuluj",
+      "confirmLogout": "Wyloguj",
+      "confirmDelete": "Usuń"
+    }
+  }
+}
