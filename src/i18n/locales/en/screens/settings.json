@@ -13,7 +13,10 @@
       "deleteMessage": "This action cannot be undone!",
       "cancel": "Cancel",
       "confirmLogout": "Logout",
-      "confirmDelete": "Delete"
+      "confirmDelete": "Delete",
+      "changeLanguageTitle": "Change Language",
+      "changeLanguageMessage": "Do you want to switch the app language?",
+      "confirmChange": "Change"
     }
   }
 }

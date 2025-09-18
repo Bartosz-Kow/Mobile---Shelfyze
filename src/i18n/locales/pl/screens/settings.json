@@ -13,7 +13,10 @@
       "deleteMessage": "Tej operacji nie można cofnąć!",
       "cancel": "Anuluj",
       "confirmLogout": "Wyloguj",
-      "confirmDelete": "Usuń"
+      "confirmDelete": "Usuń",
+      "changeLanguageTitle": "Zmień język",
+      "changeLanguageMessage": "Czy chcesz zmienić język aplikacji?",
+      "confirmChange": "Zmień"
     }
   }
 }
