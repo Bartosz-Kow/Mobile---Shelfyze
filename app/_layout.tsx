@@ -1,8 +1,8 @@
-import React from "react";
+import { AuthProvider } from "@/src/context/AuthProvider";
+import { LanguageProvider } from "@/src/context/LanguageProvider";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { LanguageProvider } from "@/src/context/LanguageProvider";
-import { AuthProvider } from "@/src/context/AuthProvider";
+import React from "react";
 export default function RootLayout() {
   return (
     <AuthProvider>
