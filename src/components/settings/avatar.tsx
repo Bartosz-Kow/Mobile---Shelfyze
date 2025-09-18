@@ -11,13 +11,13 @@ export default function AvatarComponent() {
 
   useEffect(() => {
     if (user?.avatar) {
-      setImage(user.avatar);
+      setImage(`${user.avatar}?t=${Date.now()}`);
     }
   }, [user]);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ["images", "videos"],
+      mediaTypes: ["images"],
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -25,9 +25,9 @@ export default function AvatarComponent() {
 
     if (!result.canceled && user) {
       const savedPath = await saveUserImage(user.userId, result.assets[0].uri);
-
-      setImage(savedPath);
-      setUser({ avatar: savedPath });
+      const uriWithTimestamp = `${savedPath}?t=${Date.now()}`;
+      setImage(uriWithTimestamp);
+      setUser({ ...user, avatar: savedPath });
     }
   };
 
