@@ -1,0 +1,27 @@
+{
+  "header": {
+    "title": "Dodaj książkę",
+    "subtitle": "Uzupełnij dane i zapisz"
+  },
+  "section": {
+    "basicInfo": "Podstawowe informacje"
+  },
+  "fields": {
+    "title": {
+      "label": "Tytuł",
+      "placeholder": "Wpisz tytuł książki"
+    },
+    "author": {
+      "label": "Autor",
+      "placeholder": "Wpisz autora"
+    },
+    "publisher": {
+      "label": "Wydawnictwo",
+      "placeholder": "Wpisz wydawnictwo"
+    }
+  },
+  "actions": {
+    "save": "💾 Zapisz książkę",
+    "close": "Zamknij"
+  }
+}

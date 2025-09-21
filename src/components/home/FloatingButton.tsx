@@ -1,17 +1,18 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
+import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function FloatingBtn() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.85} style={styles.fabWrapper}>
+      <TouchableOpacity
+        activeOpacity={0.85}
+        style={styles.fabWrapper}
+        onPress={() => router.push("/add-book")}
+      >
         <LinearGradient
           colors={["#4266C2", "#286161"]}
           start={{ x: 0, y: 0 }}
@@ -26,9 +27,7 @@ export default function FloatingBtn() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: { flex: 1 },
   fabWrapper: {
     position: "absolute",
     bottom: 100,

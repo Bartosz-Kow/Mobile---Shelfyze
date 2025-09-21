@@ -1,0 +1,27 @@
+{
+  "header": {
+    "title": "Add Book",
+    "subtitle": "Fill in the details and save"
+  },
+  "section": {
+    "basicInfo": "Basic Information"
+  },
+  "fields": {
+    "title": {
+      "label": "Title",
+      "placeholder": "Enter the book title"
+    },
+    "author": {
+      "label": "Author",
+      "placeholder": "Enter the author"
+    },
+    "publisher": {
+      "label": "Publisher",
+      "placeholder": "Enter the publisher"
+    }
+  },
+  "actions": {
+    "save": "💾 Save Book",
+    "close": "Close"
+  }
+}
