@@ -1,8 +1,11 @@
+import { addBook } from "@/src/api/books";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  ActivityIndicator,
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -20,12 +23,37 @@ export default function AddBookModal() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publisher, setPublisher] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSave = async () => {
+    if (!title.trim() || !author.trim() || !publisher.trim()) {
+      Alert.alert("Błąd", "Uzupełnij wszystkie pola!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await addBook({ title, author, publisher });
+
+      if (res.bookId) {
+        router.back();
+      } else {
+        Alert.alert("Błąd", res.error || "Nie udało się dodać książki");
+      }
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Błąd", "Coś poszło nie tak");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
+      {/* Header */}
       <LinearGradient
         colors={["#4266C2", "#286161"]}
         start={{ x: 0, y: 0 }}
@@ -42,7 +70,6 @@ export default function AddBookModal() {
         <View style={{ width: 40 }} />
       </LinearGradient>
 
-      {/* Content */}
       <ScrollView
         style={styles.content}
         contentContainerStyle={{ paddingBottom: 60 }}
@@ -83,11 +110,11 @@ export default function AddBookModal() {
         </View>
       </ScrollView>
 
-      {/* Save Button */}
       <TouchableOpacity
         style={styles.saveButtonWrapper}
-        onPress={() => router.back()}
+        onPress={handleSave}
         activeOpacity={0.85}
+        disabled={loading}
       >
         <LinearGradient
           colors={["#4266C2", "#286161"]}
@@ -95,7 +122,11 @@ export default function AddBookModal() {
           end={{ x: 1, y: 1 }}
           style={styles.saveButton}
         >
-          <Text style={styles.saveButtonText}>{t("actions.save")}</Text>
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.saveButtonText}>{t("actions.save")}</Text>
+          )}
         </LinearGradient>
       </TouchableOpacity>
     </KeyboardAvoidingView>
