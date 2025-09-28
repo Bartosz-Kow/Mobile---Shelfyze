@@ -1,4 +1,4 @@
-import { Book, getBooks } from "@/src/api/books";
+import { Book, getBookProgress, getBooks } from "@/src/api/books";
 import { useFocusEffect } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRouter } from "expo-router";
@@ -12,7 +12,6 @@ import {
   View,
 } from "react-native";
 import { colorForTitle } from "../components/home/bookColors";
-
 export default function BookTemplate() {
   const router = useRouter();
   const [books, setBooks] = useState<Book[]>([]);
@@ -32,12 +31,27 @@ export default function BookTemplate() {
       (async () => {
         try {
           const data = await getBooks();
+
           if (isActive) {
-            const withExtras = data.map((b) => ({
-              ...b,
-              progress: Math.floor(Math.random() * 100) + 1,
-              color: colorForTitle(b.title),
-            }));
+            const withExtras = await Promise.all(
+              data.map(async (b) => {
+                try {
+                  const progress = await getBookProgress(b.id);
+                  return {
+                    ...b,
+                    progress: progress.progress_percent,
+                    color: colorForTitle(b.title),
+                  };
+                } catch (e) {
+                  console.error(`❌ Błąd progresu dla książki ${b.id}:`, e);
+                  return {
+                    ...b,
+                    progress: 0,
+                    color: colorForTitle(b.title),
+                  };
+                }
+              })
+            );
             setBooks(withExtras);
           }
         } catch (err) {

@@ -1,9 +1,9 @@
 import { deleteBook } from "@/src/api/books";
+import { Ionicons } from "@expo/vector-icons"; // ikony expo
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
 export default function BookDetailScreen() {
   const { t } = useTranslation("details");
   const { id, title, author, publisher, progress, color } =
@@ -35,13 +35,21 @@ export default function BookDetailScreen() {
   };
 
   const handleAnswerQuestions = () => {
-    console.log("Odpowiedz na pytania:", id);
+    if (!id) return;
+    router.push({
+      pathname: "/books/[bookId]/questions",
+      params: { bookId: id },
+    });
   };
 
   const prog = progress ? parseInt(progress, 10) : 0;
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+        <Ionicons name="arrow-back" size={22} color="#333" />
+      </TouchableOpacity>
+
       <View style={styles.content}>
         <View style={[styles.cover, { backgroundColor: color || "#888" }]}>
           <View style={styles.coverOverlay} />
@@ -59,7 +67,6 @@ export default function BookDetailScreen() {
           <View style={[styles.progressFill, { width: `${prog}%` }]} />
         </View>
         <Text style={styles.progressLabel}>
-          {" "}
           {t("progress", { progress: prog })}
         </Text>
 
@@ -109,7 +116,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 20,
   },
-  content: { flex: 1, marginTop: 20 },
+  backBtn: {
+    position: "absolute",
+    top: 40,
+    left: 20,
+    zIndex: 10,
+    backgroundColor: "#f1f1f1",
+    padding: 8,
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  content: { flex: 1, marginTop: 60 },
   cover: {
     width: 120,
     height: 170,
