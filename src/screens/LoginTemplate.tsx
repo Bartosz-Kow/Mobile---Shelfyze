@@ -35,7 +35,7 @@ export default function LoginTemplate() {
       setLoading(true);
       const res = await login(email, password);
       Alert.alert(t("login.title"));
-      setAuthUser(res);
+      await setAuthUser(res);
       router.replace("/(tabs)");
       console.log("🔑 Auth response:", res);
     } catch (err: any) {

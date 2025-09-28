@@ -1,6 +1,7 @@
 import { http } from "./http";
 
 export interface AuthUser {
+  user: any;
   userId: number;
   token: string;
   email: string;
