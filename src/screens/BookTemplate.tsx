@@ -1,7 +1,8 @@
 import { Book, getBooks } from "@/src/api/books";
+import { useFocusEffect } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -25,23 +26,32 @@ export default function BookTemplate() {
     "UnicaOne-Regular": require("../../assets/fonts/UnicaOne-Regular.ttf"),
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await getBooks();
-        const withExtras = data.map((b) => ({
-          ...b,
-          progress: Math.floor(Math.random() * 100) + 1,
-          color: colorForTitle(b.title),
-        }));
-        setBooks(withExtras);
-      } catch (err) {
-        console.error("❌ Błąd przy pobieraniu książek:", err);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
+      (async () => {
+        try {
+          const data = await getBooks();
+          if (isActive) {
+            const withExtras = data.map((b) => ({
+              ...b,
+              progress: Math.floor(Math.random() * 100) + 1,
+              color: colorForTitle(b.title),
+            }));
+            setBooks(withExtras);
+          }
+        } catch (err) {
+          console.error("❌ Błąd przy pobieraniu książek:", err);
+        } finally {
+          if (isActive) setLoading(false);
+        }
+      })();
+
+      return () => {
+        isActive = false;
+      };
+    }, [])
+  );
 
   if (!loaded) {
     return (
