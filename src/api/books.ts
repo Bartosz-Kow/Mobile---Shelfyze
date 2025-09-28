@@ -63,3 +63,49 @@ export const answerQuestion = async (
   );
   return res.data;
 };
+
+// ➜ DELETE /books/:bookId
+export interface DeleteBookResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
+}
+
+export const deleteBook = async (
+  bookId: number
+): Promise<DeleteBookResponse> => {
+  const res = await http.delete<DeleteBookResponse>(`/books/${bookId}`);
+  return res.data;
+};
+// ➜ GET /books/:bookId/progress
+export interface BookProgress {
+  last_question_id: number | null;
+  answered_count: number;
+  total_questions: number;
+  progress_percent: number;
+}
+
+export const getBookProgress = async (
+  bookId: number
+): Promise<BookProgress> => {
+  const res = await http.get<BookProgress>(`/books/${bookId}/progress`);
+  return res.data;
+};
+
+// ➜ POST /books/:bookId/progress
+export interface UpdateProgressRequest {
+  lastQuestionId: number;
+}
+
+export interface UpdateProgressResponse {
+  ok: boolean;
+}
+export const updateBookProgress = async (
+  bookId: number,
+  lastQuestionId: number
+): Promise<{ ok: boolean }> => {
+  const res = await http.post<{ ok: boolean }>(`/books/${bookId}/progress`, {
+    lastQuestionId,
+  });
+  return res.data;
+};

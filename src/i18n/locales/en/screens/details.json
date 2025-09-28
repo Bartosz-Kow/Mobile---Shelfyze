@@ -1,0 +1,13 @@
+{
+  "title": "Book details",
+  "authorUnknown": "Unknown author",
+  "publisherUnknown": "Unknown publisher",
+  "introTitle": "✨ Start your journey!",
+  "introText": "Here you can begin answering questions about the book. Every answer is a step towards deeper understanding and reflection. 🚀",
+  "introDelete": "If for any reason you want to remove this book from your shelf, you can do it anytime.",
+  "actions": {
+    "delete": "Delete book",
+    "answer": "Answer questions"
+  },
+  "progress": "{{progress}}% read"
+}

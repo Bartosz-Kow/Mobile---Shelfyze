@@ -8,9 +8,13 @@ import enChat from "./locales/en/screens/chat.json";
 import enIndex from "./locales/en/screens/index.json";
 import enSettings from "./locales/en/screens/settings.json";
 
+import enDetails from "./locales/en/screens/details.json";
+import enHome from "./locales/en/screens/home.json";
 import plAddBook from "./locales/pl/screens/addbook.json";
 import plAuth from "./locales/pl/screens/auth.json";
 import plChat from "./locales/pl/screens/chat.json";
+import plDetails from "./locales/pl/screens/details.json";
+import plHome from "./locales/pl/screens/home.json";
 import plIndex from "./locales/pl/screens/index.json";
 import plSettings from "./locales/pl/screens/settings.json";
 
@@ -21,6 +25,8 @@ export const resources = {
     chat: enChat,
     settings: enSettings,
     addbook: enAddBook,
+    home: enHome,
+    details: enDetails,
   },
   pl: {
     index: plIndex,
@@ -28,6 +34,8 @@ export const resources = {
     chat: plChat,
     settings: plSettings,
     addbook: plAddBook,
+    home: plHome,
+    details: plDetails,
   },
 } as const;
 
@@ -40,7 +48,7 @@ i18n.use(initReactI18next).init({
   resources,
   lng: deviceLanguage,
   fallbackLng,
-  ns: ["index", "auth", "chat", "settings", "addbook"],
+  ns: ["index", "auth", "chat", "settings", "addbook", "home", "details"],
   defaultNS: "index",
   compatibilityJSON: "v4",
   interpolation: { escapeValue: false },

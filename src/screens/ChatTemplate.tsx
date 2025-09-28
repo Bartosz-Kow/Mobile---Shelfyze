@@ -22,7 +22,7 @@ import { useAuth } from "../context/AuthProvider";
 import { ChatMessage } from "../types/chat";
 
 const ADMIN_ID = 1;
-const POLLING_INTERVAL = 15 * 60 * 1000;
+const POLLING_INTERVAL = 15 * 1 * 1000;
 
 export default function ChatScreen() {
   const { user } = useAuth();

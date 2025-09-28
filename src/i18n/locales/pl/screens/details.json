@@ -1,0 +1,13 @@
+{
+  "title": "Szczegóły książki",
+  "authorUnknown": "Autor nieznany",
+  "publisherUnknown": "Wydawca nieznany",
+  "introTitle": "✨ Zacznij swoją przygodę!",
+  "introText": "Tutaj możesz rozpocząć odpowiadanie na pytania dotyczące książki. Każda odpowiedź to krok w kierunku lepszego zrozumienia treści i refleksji. 🚀",
+  "introDelete": "Jeśli z jakiegoś powodu chcesz usunąć tę książkę z półki, możesz to zrobić w każdej chwili.",
+  "actions": {
+    "delete": "Usuń książkę",
+    "answer": "Odpowiedz na pytania"
+  },
+  "progress": "{{progress}}% przeczytane"
+}

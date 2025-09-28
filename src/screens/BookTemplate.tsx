@@ -1,7 +1,8 @@
-import { Book, getBooks } from "@/src/api/books";
+import { Book, getBookProgress, getBooks } from "@/src/api/books";
+import { useFocusEffect } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -11,7 +12,6 @@ import {
   View,
 } from "react-native";
 import { colorForTitle } from "../components/home/bookColors";
-
 export default function BookTemplate() {
   const router = useRouter();
   const [books, setBooks] = useState<Book[]>([]);
@@ -25,23 +25,47 @@ export default function BookTemplate() {
     "UnicaOne-Regular": require("../../assets/fonts/UnicaOne-Regular.ttf"),
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await getBooks();
-        const withExtras = data.map((b) => ({
-          ...b,
-          progress: Math.floor(Math.random() * 100) + 1,
-          color: colorForTitle(b.title),
-        }));
-        setBooks(withExtras);
-      } catch (err) {
-        console.error("❌ Błąd przy pobieraniu książek:", err);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
+      (async () => {
+        try {
+          const data = await getBooks();
+
+          if (isActive) {
+            const withExtras = await Promise.all(
+              data.map(async (b) => {
+                try {
+                  const progress = await getBookProgress(b.id);
+                  return {
+                    ...b,
+                    progress: progress.progress_percent,
+                    color: colorForTitle(b.title),
+                  };
+                } catch (e) {
+                  console.error(`❌ Błąd progresu dla książki ${b.id}:`, e);
+                  return {
+                    ...b,
+                    progress: 0,
+                    color: colorForTitle(b.title),
+                  };
+                }
+              })
+            );
+            setBooks(withExtras);
+          }
+        } catch (err) {
+          console.error("❌ Błąd przy pobieraniu książek:", err);
+        } finally {
+          if (isActive) setLoading(false);
+        }
+      })();
+
+      return () => {
+        isActive = false;
+      };
+    }, [])
+  );
 
   if (!loaded) {
     return (
@@ -69,7 +93,14 @@ export default function BookTemplate() {
           onPress={() =>
             router.push({
               pathname: "/books/[bookId]",
-              params: { id: item.id.toString() },
+              params: {
+                id: item.id.toString(),
+                title: item.title,
+                author: item.author,
+                publisher: item.publisher,
+                progress: item.progress.toString(),
+                color: String(item.color),
+              },
             })
           }
         >
@@ -164,7 +195,7 @@ const styles = StyleSheet.create({
 
   progressWrapper: {
     height: 8,
-    backgroundColor: "#E5E7EB",
+    backgroundColor: "#d7e1ef",
     borderRadius: 6,
     overflow: "hidden",
   },
@@ -172,7 +203,7 @@ const styles = StyleSheet.create({
   progressFill: {
     height: "100%",
     borderRadius: 6,
-    backgroundColor: "#3B82F6",
+    backgroundColor: "#347ac1",
   },
 
   progressLabel: {
