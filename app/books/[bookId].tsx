@@ -1,7 +1,8 @@
+import { deleteBook } from "@/src/api/books";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function BookDetailScreen() {
   const { t } = useTranslation("details");
@@ -17,8 +18,20 @@ export default function BookDetailScreen() {
 
   const router = useRouter();
 
-  const handleDelete = () => {
-    console.log("Usuń książkę:", id);
+  const handleDelete = async () => {
+    if (!id) return;
+    try {
+      const res = await deleteBook(Number(id));
+      if (res.success) {
+        Alert.alert("✅", t("deleteSuccess"));
+        router.back();
+      } else {
+        Alert.alert("⚠️", res.error || t("deleteError"));
+      }
+    } catch (e) {
+      console.error("❌ Error deleting book:", e);
+      Alert.alert("❌", t("deleteError"));
+    }
   };
 
   const handleAnswerQuestions = () => {

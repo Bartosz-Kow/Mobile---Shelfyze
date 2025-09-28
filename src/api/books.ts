@@ -63,3 +63,17 @@ export const answerQuestion = async (
   );
   return res.data;
 };
+
+// ➜ DELETE /books/:bookId
+export interface DeleteBookResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
+}
+
+export const deleteBook = async (
+  bookId: number
+): Promise<DeleteBookResponse> => {
+  const res = await http.delete<DeleteBookResponse>(`/books/${bookId}`);
+  return res.data;
+};
