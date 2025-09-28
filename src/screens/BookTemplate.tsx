@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
 
   progressWrapper: {
     height: 8,
-    backgroundColor: "#E5E7EB",
+    backgroundColor: "#d7e1ef",
     borderRadius: 6,
     overflow: "hidden",
   },
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   progressFill: {
     height: "100%",
     borderRadius: 6,
-    backgroundColor: "#3B82F6",
+    backgroundColor: "#347ac1",
   },
 
   progressLabel: {
