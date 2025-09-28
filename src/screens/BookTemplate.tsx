@@ -69,7 +69,14 @@ export default function BookTemplate() {
           onPress={() =>
             router.push({
               pathname: "/books/[bookId]",
-              params: { id: item.id.toString() },
+              params: {
+                id: item.id.toString(),
+                title: item.title,
+                author: item.author,
+                publisher: item.publisher,
+                progress: item.progress.toString(),
+                color: String(item.color),
+              },
             })
           }
         >
